@@ -42,11 +42,11 @@ class ListenerCommand extends Command
                 // $server->send('hello ' . $address . '! echo: ' . $message, $address);
 
                 // $this->info('client ' . $address . ': ' . $message);
+                $message = str_replace("  ", " ", $message);
 
                 $pattern = "/^\<([0-9]{1,3})\>([A-Za-z]{3} [0-9]{1,2} \d{2}:\d{2}:\d{2}) ([\S]+) ([\S]+) ([\S\s]+)/";
                 $result = preg_split($pattern, $message, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 
-                $message = str_replace("  ", " ", $message);
 
                 $data = [
                     'priority' => $result[0],
