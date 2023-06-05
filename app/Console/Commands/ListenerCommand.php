@@ -11,7 +11,7 @@ class ListenerCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:listen';
+    protected $signature = 'app:listen {host=0.0.0.0} {port=8080}';
 
     /**
      * The console command description.
@@ -25,15 +25,27 @@ class ListenerCommand extends Command
      */
     public function handle()
     {
-        $this->info("Started");
         $factory = new \React\Datagram\Factory();
 
-        $factory->createClient('0.0.0.0:1234')->then(function (\React\Datagram\Socket $client) {
-            $client->send('first');
+        // $factory->createClient($this->argument('host').':'.$this->argument('port'))->then(function (\React\Datagram\Socket $client) {
+        //     $client->send('first');
 
-            $client->on('message', function($message, $serverAddress, $client) {
-                $this->info( 'received "' . $message . '" from ' . $serverAddress );
+        //     $client->on('message', function($message, $serverAddress, $client) {
+        //         $this->info( 'received "' . $message . '" from ' . $serverAddress );
+        //     });
+        // });
+
+        $factory = new \React\Datagram\Factory();
+
+        $factory->createServer($this->argument('host').':'.$this->argument('port'))->then(function (\React\Datagram\Socket $server) {
+            $server->on('message', function($message, $address, $server) {
+                // $server->send('hello ' . $address . '! echo: ' . $message, $address);
+
+                $this->info('client ' . $address . ': ' . $message);
             });
         });
+
+
+        $this->info("Started on " . $this->argument('host') . ':' . $this->argument('port'));
     }
 }
