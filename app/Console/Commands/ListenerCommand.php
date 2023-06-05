@@ -28,7 +28,7 @@ class ListenerCommand extends Command
         $this->info("Started");
         $factory = new \React\Datagram\Factory();
 
-        $factory->createClient('localhost:1234')->then(function (\React\Datagram\Socket $client) {
+        $factory->createClient('0.0.0.0:1234')->then(function (\React\Datagram\Socket $client) {
             $client->send('first');
 
             $client->on('message', function($message, $serverAddress, $client) {
