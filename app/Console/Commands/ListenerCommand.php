@@ -56,7 +56,7 @@ class ListenerCommand extends Command
                     'message' => $result[4],
                 ];
 
-                $this->info("Priority: {$data['priority']}\nServer: {$data['server']}\nApp: {$data['app']}\nMessage: {$data['message']}");
+                $this->info("\n\nPriority: {$data['priority']}\nServer: {$data['server']}\nApp: {$data['app']}\nMessage: {$data['message']}");
             });
         });
 
